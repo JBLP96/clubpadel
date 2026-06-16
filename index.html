@@ -339,16 +339,15 @@ async function saveMatch(){
   const s3=document.getElementById('sel-p3').value;
   const s4=document.getElementById('sel-p4').value;
   if(!s1||!s2||!s3||!s4)return set({err:'Selecciona los 4 jugadores'});
-  if(new Set([s1,s2,s3,s4]).size<4)return set({err:'Un jugador no puede repetirse'});
+  const ids=[s1,s2,s3,s4].filter(Boolean);
+  if(new Set(ids).size<ids.length)return set({err:'Un jugador no puede repetirse'});
   const setsData=[];
   for(let i=0;i<m.sets.length;i++){
     const g1=document.getElementById('sg1-'+i)?.value;
     const g2=document.getElementById('sg2-'+i)?.value;
     if(g1!==''&&g2!=='')setsData.push({g1,g2});
   }
-  if(setsData.length<2)return set({err:'Introduce al menos 2 sets'});
-  const winner=calcWinner(setsData);
-  if(!winner)return set({err:'No hay un ganador claro. Revisa los sets.'});
+  const winner=setsData.length>0?calcWinner(setsData):null;
   set({loading:true,err:null,ok:null});
   const {data:matchData,error:me}=await sb.from('matches').insert({
     player1_id:s1,player2_id:s2,player3_id:s3,player4_id:s4,
@@ -707,7 +706,7 @@ function render(){
           return`<span class="set-pill ${sw1?'win-set':''}">${s.games_team1}–${s.games_team2}</span>
                  <span class="set-pill ${!sw1?'win-set':''}">${s.games_team2}–${s.games_team1}</span>`;
         }).join('<span style="font-size:11px;color:var(--text3);padding:0 2px">|</span>');
-        const canDelete=isAdmin||m.created_by===S.user?.id;
+        const canDelete=true;
         return`<div class="match-item">
           <div class="mdate" style="display:flex;justify-content:space-between">
             <span><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px"></i> ${fdate(m.created_at)}</span>
