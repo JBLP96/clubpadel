@@ -204,7 +204,8 @@ async function loadAll(){
   ]);
   const players=r1.data||[],matches=r2.data||[],sets=r3.data||[];
   const tournaments=r4.data||[],tTeams=r5.data||[];
-  set({players,matches,sets,tournaments,tTeams,ranking:buildRanking(players,matches,sets)},true);
+  S={...S,players,matches,sets,tournaments,tTeams,ranking:buildRanking(players,matches,sets)};
+  render();
 }
 
 function buildRanking(players,matches,sets){
@@ -367,12 +368,9 @@ async function saveMatch(){
 }
 
 async function deleteMatch(id){
-  S.matches=S.matches.filter(m=>m.id!==id);
-  S.sets=S.sets.filter(s=>s.match_id!==id);
-  S.ranking=buildRanking(S.players,S.matches,S.sets);
-  render();
-  sb.from('match_sets').delete().eq('match_id',id);
-  sb.from('matches').delete().eq('id',id);
+  await sb.from('match_sets').delete().eq('match_id',id);
+  await sb.from('matches').delete().eq('id',id);
+  await loadAll();
 }
 
 async function toggleAdmin(uid,current){
@@ -402,13 +400,10 @@ async function finishTournament(id){
   await loadAll();
 }
 async function deleteTournament(id){
-  S.tournaments=S.tournaments.filter(t=>t.id!==id);
-  S.matches=S.matches.filter(m=>m.tournament_id!==id);
-  S.tTeams=S.tTeams.filter(t=>t.tournament_id!==id);
-  render();
-  sb.from('tournament_teams').delete().eq('tournament_id',id);
-  sb.from('matches').delete().eq('tournament_id',id);
-  sb.from('tournaments').delete().eq('id',id);
+  await sb.from('tournament_teams').delete().eq('tournament_id',id);
+  await sb.from('matches').delete().eq('tournament_id',id);
+  await sb.from('tournaments').delete().eq('id',id);
+  await loadAll();
 }
 async function joinTournament(tid){
   const p2=document.getElementById('join-p2-'+tid)?.value;
