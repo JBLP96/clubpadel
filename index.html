@@ -367,14 +367,12 @@ async function saveMatch(){
 }
 
 async function deleteMatch(id){
-  if(!confirm('¿Eliminar este partido?'))return;
-  await sb.from('match_sets').delete().eq('match_id',id);
-  await sb.from('matches').delete().eq('id',id);
   S.matches=S.matches.filter(m=>m.id!==id);
   S.sets=S.sets.filter(s=>s.match_id!==id);
   S.ranking=buildRanking(S.players,S.matches,S.sets);
   render();
-  loadAll();
+  sb.from('match_sets').delete().eq('match_id',id);
+  sb.from('matches').delete().eq('id',id);
 }
 
 async function toggleAdmin(uid,current){
@@ -404,17 +402,13 @@ async function finishTournament(id){
   await loadAll();
 }
 async function deleteTournament(id){
-  if(!confirm('¿Eliminar este torneo y todos sus partidos?'))return;
-  const tms=S.matches.filter(m=>m.tournament_id===id);
-  for(const m of tms){await sb.from('match_sets').delete().eq('match_id',m.id);}
-  await sb.from('matches').delete().eq('tournament_id',id);
-  await sb.from('tournament_teams').delete().eq('tournament_id',id);
-  await sb.from('tournaments').delete().eq('id',id);
   S.tournaments=S.tournaments.filter(t=>t.id!==id);
   S.matches=S.matches.filter(m=>m.tournament_id!==id);
   S.tTeams=S.tTeams.filter(t=>t.tournament_id!==id);
   render();
-  loadAll();
+  sb.from('tournament_teams').delete().eq('tournament_id',id);
+  sb.from('matches').delete().eq('tournament_id',id);
+  sb.from('tournaments').delete().eq('id',id);
 }
 async function joinTournament(tid){
   const p2=document.getElementById('join-p2-'+tid)?.value;
