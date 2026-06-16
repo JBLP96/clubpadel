@@ -1,56 +1,658 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Página Web</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pádel Club</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --green:#639922;--green-dark:#4a7418;--green-mid:#97C459;--green-text:#3B6D11;--green-deep:#27500A;
+      --bg:#f4f4f0;--surface:#fff;--surface2:#f7f7f5;
+      --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.18);
+      --text:#1a1a18;--text2:#5f5e5a;--text3:#99988f;
+      --danger-bg:#FCEBEB;--danger:#A32D2D;
+      --success-bg:#EAF3DE;--success:#3B6D11;
+      --info-bg:#E6F1FB;--info:#185FA5;
+      --warn-bg:#FFF8E1;--warn:#856404;
+      --radius:10px;--radius-sm:6px;
     }
-    .container {
-      text-align: center;
-      padding: 3rem 2rem;
-      max-width: 600px;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, #e94560, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    p {
-      font-size: 1.2rem;
-      color: #a8b2d8;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(233, 69, 96, 0.15);
-      border: 1px solid #e94560;
-      color: #e94560;
-      padding: 0.5rem 1.5rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+    @media(prefers-color-scheme:dark){:root{
+      --bg:#1a1a18;--surface:#252523;--surface2:#2e2e2b;
+      --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.18);
+      --text:#f0f0ec;--text2:#a8a79f;--text3:#6b6a63;
+      --danger-bg:#2d1515;--danger:#f09595;
+      --success-bg:#1a2d10;--success:#97C459;
+      --info-bg:#0f1e30;--info:#85B7EB;
+      --warn-bg:#2a2000;--warn:#FAC775;
+    }}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    /* NAV */
+    .nav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px}
+    .nav-ball{width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px}
+    .nav-logo span{font-size:16px;font-weight:600}
+    .nav-tabs{display:flex;gap:3px;flex-wrap:wrap}
+    .nav-tab{padding:5px 11px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);border-radius:var(--radius-sm);font-family:inherit}
+    .nav-tab:hover{background:var(--surface2)}
+    .nav-tab.active{background:var(--green);color:#fff}
+    .nav-right{display:flex;align-items:center;gap:8px}
+    .avatar{width:32px;height:32px;border-radius:50%;background:var(--info-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--info);border:.5px solid var(--border)}
+    .btn-out{font-size:12px;padding:5px 12px;background:transparent;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-family:inherit}
+    /* LAYOUT */
+    .main{max-width:760px;margin:0 auto;padding:1.5rem 1rem}
+    .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+    .section-title{font-size:16px;font-weight:600;margin-bottom:1rem}
+    /* FORMS */
+    label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px;font-weight:500}
+    .fg{margin-bottom:1rem}
+    input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{
+      width:100%;padding:9px 12px;font-size:14px;border:.5px solid var(--border2);
+      border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-family:inherit}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green)}
+    .btn{width:100%;padding:10px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:inherit}
+    .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-dark)}
+    .btn-green:disabled{opacity:.5;cursor:not-allowed}
+    .btn-ghost{background:transparent;color:var(--text2);border:.5px solid var(--border2)}.btn-ghost:hover{background:var(--surface2)}
+    .btn-sm{padding:5px 12px;font-size:12px;width:auto}
+    /* MSGS */
+    .msg{font-size:13px;padding:10px 12px;border-radius:var(--radius-sm);margin-bottom:1rem;display:flex;align-items:center;gap:6px}
+    .msg-err{background:var(--danger-bg);color:var(--danger)}
+    .msg-ok{background:var(--success-bg);color:var(--success)}
+    .msg-warn{background:var(--warn-bg);color:var(--warn)}
+    /* CENTER */
+    .cx{max-width:440px;margin:2rem auto;padding:0 1rem}
+    .logo-block{display:flex;align-items:center;gap:12px;margin-bottom:1.75rem}
+    .logo-ball{width:44px;height:44px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:22px}
+    .logo-block h1{font-size:22px;font-weight:700}
+    .logo-block p{font-size:13px;color:var(--text2);margin-top:2px}
+    /* RANKING */
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th{text-align:left;padding:8px 10px;font-size:12px;font-weight:600;color:var(--text2);border-bottom:.5px solid var(--border)}
+    td{padding:10px 10px;border-bottom:.5px solid var(--border);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:var(--surface2)}
+    .rbadge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+    .r1{background:#FFF3CD;color:#856404}.r2{background:#e8e8e8;color:#555}.r3{background:#fde8d8;color:#7a3f1a}.rn{background:var(--surface2);color:var(--text2)}
+    .pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600}
+    .pill-green{background:var(--success-bg);color:var(--success)}
+    .pill-warn{background:var(--warn-bg);color:var(--warn)}
+    .pill-info{background:var(--info-bg);color:var(--info)}
+    .pill-red{background:var(--danger-bg);color:var(--danger)}
+    /* MATCH */
+    .match-item{padding:13px 0;border-bottom:.5px solid var(--border)}
+    .match-item:last-child{border-bottom:none}
+    .mdate{font-size:11px;color:var(--text3);margin-bottom:4px}
+    .mrow{display:flex;align-items:center;gap:8px}
+    .mteam{font-size:13px;color:var(--text2);flex:1;line-height:1.4}
+    .mteam.win{color:var(--text);font-weight:600}
+    .mscore{font-size:15px;font-weight:700;color:var(--text);background:var(--surface2);padding:3px 12px;border-radius:var(--radius-sm);white-space:nowrap;border:.5px solid var(--border)}
+    .sets-row{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
+    .set-pill{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--surface2);color:var(--text2);border:.5px solid var(--border)}
+    .set-pill.win-set{background:var(--success-bg);color:var(--success)}
+    /* SET INPUT */
+    .sets-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;max-width:300px}
+    .set-num-input{text-align:center;font-size:20px;font-weight:700;padding:10px 6px}
+    .set-vs{text-align:center;font-size:16px;font-weight:700;color:var(--text2)}
+    /* PROFILE */
+    .pavatar{width:64px;height:64px;border-radius:50%;background:var(--info-bg);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--info);border:.5px solid var(--border)}
+    .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.25rem}
+    .mcard{background:var(--surface2);border-radius:var(--radius-sm);padding:12px;text-align:center}
+    .mcard-label{font-size:11px;color:var(--text2);margin-bottom:3px;font-weight:500}
+    .mcard-val{font-size:22px;font-weight:700}
+    /* TOURNAMENT */
+    .t-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:10px}
+    .t-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .t-name{font-size:15px;font-weight:600}
+    .t-meta{font-size:12px;color:var(--text2);margin-top:2px}
+    .t-actions{display:flex;gap:6px;flex-shrink:0}
+    /* BRACKET */
+    .bracket{overflow-x:auto;padding-bottom:8px}
+    .bracket-round{display:flex;flex-direction:column;gap:16px;min-width:200px}
+    .bracket-match{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px}
+    .bracket-team{display:flex;justify-content:space-between;padding:3px 0}
+    .bracket-team.win{font-weight:600;color:var(--green)}
+    /* GROUP TABLE */
+    .group-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:.05em}
+    /* EMPTY */
+    .empty{text-align:center;padding:2rem;color:var(--text2);font-size:14px}
+    .empty .ico{font-size:36px;margin-bottom:8px}
+    /* SETUP */
+    .setup{background:var(--success-bg);border:.5px solid var(--green-mid);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.25rem}
+    .setup h3{font-size:13px;font-weight:600;color:var(--green-deep);margin-bottom:6px}
+    .setup p{font-size:12px;color:var(--green-text);line-height:1.6}
+    .sql-block{display:block;background:rgba(0,0,0,0.08);padding:10px;border-radius:var(--radius-sm);font-family:'Courier New',monospace;font-size:10px;color:var(--green-deep);margin-top:8px;white-space:pre;overflow-x:auto;line-height:1.5}
+    /* TABS inside page */
+    .sub-tabs{display:flex;gap:4px;margin-bottom:1rem;border-bottom:.5px solid var(--border);padding-bottom:8px}
+    .sub-tab{padding:5px 12px;font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--text2);border-radius:var(--radius-sm);font-family:inherit;font-weight:500}
+    .sub-tab.active{background:var(--green);color:#fff}
+    @media(max-width:600px){
+      .nav-logo span{display:none}
+      .nav-tab{padding:5px 7px;font-size:11px}
+      .mgrid{grid-template-columns:repeat(2,1fr)}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hola, mundo</h1>
-    <p>Esta página fue creada y publicada automáticamente por Claude en GitHub Pages.</p>
-    <span class="badge">✨ Online</span>
-  </div>
+<div id="root"></div>
+<script>
+const {createClient}=supabase;
+const CFG_KEY='padel_cfg_v4';
+let sb=null;
+
+let S={
+  view:'config',tab:'ranking',
+  user:null,profile:null,
+  players:[],matches:[],sets:[],ranking:[],
+  tournaments:[],tTeams:[],
+  loading:false,err:null,ok:null,
+  loginMode:'login',
+  // nuevo partido
+  np:{p1:'',p2:'',p3:'',p4:'',sets:[{g1:'',g2:''},{g1:'',g2:''}],tid:'',tround:''},
+  // nuevo torneo
+  nt:{name:'',type:'round_robin'},
+  // vista torneo activo
+  activeTid:null,
+  tSubTab:'clasificacion',
+};
+
+function set(u,skip){S={...S,...u};if(!skip)render()}
+function getCfg(){try{return JSON.parse(localStorage.getItem(CFG_KEY))}catch{return null}}
+function saveCfg(u,k){localStorage.setItem(CFG_KEY,JSON.stringify({url:u,key:k}))}
+function initSB(u,k){sb=createClient(u,k)}
+
+async function boot(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session)await loadUser(session.user);
+  else set({view:'auth',loading:false});
+}
+async function loadUser(user){
+  const {data:profile}=await sb.from('profiles').select('*').eq('id',user.id).single();
+  set({user,profile},true);
+  await loadAll();
+  set({view:'app',loading:false});
+}
+async function loadAll(){
+  const [r1,r2,r3,r4,r5]=await Promise.all([
+    sb.from('profiles').select('*'),
+    sb.from('matches').select('*').order('created_at',{ascending:false}),
+    sb.from('match_sets').select('*'),
+    sb.from('tournaments').select('*').order('created_at',{ascending:false}),
+    sb.from('tournament_teams').select('*'),
+  ]);
+  const players=r1.data||[],matches=r2.data||[],sets=r3.data||[];
+  const tournaments=r4.data||[],tTeams=r5.data||[];
+  set({players,matches,sets,tournaments,tTeams,ranking:buildRanking(players,matches,sets)},true);
+}
+
+function buildRanking(players,matches,sets){
+  const s={};
+  players.forEach(p=>{s[p.id]={...p,wins:0,losses:0,played:0,points:0,gamesFor:0,gamesAgainst:0}});
+  matches.filter(m=>m.winner_team&&!m.tournament_id).forEach(m=>{
+    const ms=sets.filter(x=>x.match_id===m.id);
+    const gf1=ms.reduce((a,x)=>a+x.games_team1,0),gf2=ms.reduce((a,x)=>a+x.games_team2,0);
+    const t1=[m.player1_id,m.player2_id].filter(Boolean);
+    const t2=[m.player3_id,m.player4_id].filter(Boolean);
+    t1.forEach(id=>{if(!s[id])return;s[id].played++;if(m.winner_team===1){s[id].wins++;s[id].points+=3}else s[id].losses++;s[id].gamesFor+=gf1;s[id].gamesAgainst+=gf2});
+    t2.forEach(id=>{if(!s[id])return;s[id].played++;if(m.winner_team===2){s[id].wins++;s[id].points+=3}else s[id].losses++;s[id].gamesFor+=gf2;s[id].gamesAgainst+=gf1});
+  });
+  return Object.values(s).sort((a,b)=>b.points-a.points||b.wins-a.wins||(b.gamesFor-b.gamesAgainst)-(a.gamesFor-a.gamesAgainst));
+}
+
+// calcular ganador a partir de sets
+function calcWinner(setsArr){
+  let w1=0,w2=0;
+  setsArr.forEach(s=>{const g1=parseInt(s.g1)||0,g2=parseInt(s.g2)||0;if(g1>g2)w1++;else if(g2>g1)w2++});
+  if(w1>=2)return 1;
+  if(w2>=2)return 2;
+  return null;
+}
+
+// AUTH
+async function doLogin(){
+  const email=document.getElementById('f-email').value.trim();
+  const pass=document.getElementById('f-pass').value;
+  if(!email||!pass)return set({err:'Introduce email y contraseña'});
+  set({loading:true,err:null});
+  const {error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error)return set({loading:false,err:error.message});
+  const {data:{session}}=await sb.auth.getSession();
+  if(session)await loadUser(session.user);
+}
+async function doRegister(){
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const pass=document.getElementById('f-pass').value;
+  if(!name)return set({err:'Introduce tu nombre'});
+  if(!email||!pass||pass.length<6)return set({err:'Email y contraseña (mín. 6 caracteres)'});
+  set({loading:true,err:null});
+  const {data,error}=await sb.auth.signUp({email,password:pass});
+  if(error)return set({loading:false,err:error.message});
+  if(data.user){
+    await sb.from('profiles').upsert({id:data.user.id,email,name});
+    set({loading:false,ok:'Cuenta creada. Ahora inicia sesión.',loginMode:'login'});
+  }
+}
+async function doLogout(){
+  await sb.auth.signOut();
+  set({view:'auth',user:null,profile:null,tab:'ranking',err:null,ok:null});
+}
+
+// NUEVO PARTIDO
+function addSetRow(){
+  const sets=[...S.np.sets,{g1:'',g2:''}];
+  set({np:{...S.np,sets}});
+}
+function removeSetRow(i){
+  const sets=S.np.sets.filter((_,idx)=>idx!==i);
+  set({np:{...S.np,sets}});
+}
+
+async function saveMatch(){
+  const m=S.np;
+  const s1=document.getElementById('sel-p1').value;
+  const s2=document.getElementById('sel-p2').value;
+  const s3=document.getElementById('sel-p3').value;
+  const s4=document.getElementById('sel-p4').value;
+  if(!s1||!s2||!s3||!s4)return set({err:'Selecciona los 4 jugadores'});
+  if(new Set([s1,s2,s3,s4]).size<4)return set({err:'Un jugador no puede repetirse'});
+  // leer sets del DOM
+  const setsData=[];
+  for(let i=0;i<m.sets.length;i++){
+    const g1=document.getElementById('sg1-'+i)?.value;
+    const g2=document.getElementById('sg2-'+i)?.value;
+    if(g1!==''&&g2!=='')setsData.push({g1,g2});
+  }
+  if(setsData.length<2)return set({err:'Introduce al menos 2 sets'});
+  const winner=calcWinner(setsData);
+  if(!winner)return set({err:'No hay un ganador claro. Revisa los sets.'});
+  set({loading:true,err:null,ok:null});
+  const {data:matchData,error:me}=await sb.from('matches').insert({
+    player1_id:s1,player2_id:s2,player3_id:s3,player4_id:s4,
+    winner_team:winner,
+    tournament_id:m.tid||null,
+    tournament_round:m.tround||null,
+    created_by:S.user.id
+  }).select().single();
+  if(me)return set({loading:false,err:me.message});
+  const setsInsert=setsData.map((s,i)=>({
+    match_id:matchData.id,set_number:i+1,
+    games_team1:parseInt(s.g1),games_team2:parseInt(s.g2)
+  }));
+  await sb.from('match_sets').insert(setsInsert);
+  set({np:{p1:'',p2:'',p3:'',p4:'',sets:[{g1:'',g2:''},{g1:'',g2:''}],tid:'',tround:''},loading:false,ok:'¡Partido registrado!'});
+  await loadAll();
+}
+
+// TORNEOS
+async function createTournament(){
+  const name=document.getElementById('f-tname')?.value.trim();
+  const type=document.getElementById('f-ttype')?.value;
+  if(!name)return set({err:'Ponle un nombre al torneo'});
+  set({loading:true,err:null});
+  await sb.from('tournaments').insert({name,type,created_by:S.user.id,status:'pending'});
+  set({loading:false,ok:'Torneo enviado para aprobación',nt:{name:'',type:'round_robin'}});
+  await loadAll();
+}
+async function approveTournament(id){
+  await sb.from('tournaments').update({status:'approved',approved_by:S.user.id}).eq('id',id);
+  await loadAll();
+}
+async function startTournament(id){
+  await sb.from('tournaments').update({status:'active',started_at:new Date().toISOString()}).eq('id',id);
+  await loadAll();
+}
+async function joinTournament(tid){
+  const p2=document.getElementById('join-p2-'+tid)?.value;
+  if(!p2)return set({err:'Selecciona tu compañero'});
+  if(p2===S.user.id)return set({err:'No puedes ser tu propio compañero'});
+  set({loading:true,err:null});
+  await sb.from('tournament_teams').insert({tournament_id:tid,player1_id:S.user.id,player2_id:p2});
+  set({loading:false,ok:'¡Apuntados!'});
+  await loadAll();
+}
+async function updateName(){
+  const name=document.getElementById('f-editname').value.trim();
+  if(!name)return;
+  await sb.from('profiles').update({name}).eq('id',S.user.id);
+  set({profile:{...S.profile,name},ok:'Nombre actualizado'});
+  await loadAll();
+}
+
+function handleCfg(){
+  const url=document.getElementById('f-url').value.trim();
+  const key=document.getElementById('f-key').value.trim();
+  if(!url||!key)return set({err:'Introduce URL y Anon Key'});
+  try{initSB(url,key);saveCfg(url,key);set({err:null,view:'loading'});boot().catch(()=>set({view:'auth',err:'No se pudo conectar.'}))}
+  catch(e){set({err:'Credenciales inválidas'})}
+}
+
+// HELPERS
+function pname(id){const p=S.players.find(x=>x.id===id);return p?(p.name||p.email.split('@')[0]):'?'}
+function ini(n){if(!n)return'?';return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+function fdate(s){if(!s)return'';return new Date(s).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function sel(id,val,label='Seleccionar...'){
+  const opts=S.players.map(p=>`<option value="${p.id}" ${val===p.id?'selected':''}>${p.name||p.email.split('@')[0]}</option>`).join('');
+  return `<select id="${id}"><option value="">${label}</option>${opts}</select>`;
+}
+function tsel(id,val){
+  const opts=S.tournaments.filter(t=>t.status==='active').map(t=>`<option value="${t.id}" ${val===t.id?'selected':''}>${t.name}</option>`).join('');
+  return `<select id="${id}"><option value="">Sin torneo (partido libre)</option>${opts}</select>`;
+}
+function statusPill(s){
+  const map={pending:'pill-warn',approved:'pill-info',active:'pill-green',finished:'pill'};
+  const label={pending:'Pendiente',approved:'Aprobado',active:'En curso',finished:'Finalizado'};
+  return `<span class="pill ${map[s]||'pill'}">${label[s]||s}</span>`;
+}
+function typePill(t){
+  const label={round_robin:'Round Robin',elimination:'Eliminatoria',combined:'Combinado'};
+  return `<span class="pill pill-info" style="font-size:11px">${label[t]||t}</span>`;
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function render(){
+  const root=document.getElementById('root');
+  if(!root)return;
+
+  if(S.view==='config'){
+    root.innerHTML=`<div class="cx"><div class="card">
+      <div class="logo-block"><div class="logo-ball">🎾</div><div><h1>Pádel Club</h1><p>Gestión de partidos y torneos</p></div></div>
+      <div class="setup"><h3>⚡ SQL requerido — ejecuta en Supabase SQL Editor</h3>
+        <p>Descarga también el archivo <strong>padel-schema-v2.sql</strong> adjunto y ejecútalo primero.</p>
+        <p style="margin-top:6px">Luego introduce tus credenciales:</p></div>
+      ${S.err?`<div class="msg msg-err"><i class="ti ti-alert-circle"></i> ${S.err}</div>`:''}
+      <div class="fg"><label>URL del proyecto</label><input type="text" id="f-url" placeholder="https://xxxx.supabase.co"/></div>
+      <div class="fg"><label>Anon Key</label><input type="text" id="f-key" placeholder="eyJhbGci..."/></div>
+      <button class="btn btn-green" onclick="handleCfg()">Conectar</button>
+    </div></div>`;
+    return;
+  }
+
+  if(S.view==='auth'){
+    const isReg=S.loginMode==='register';
+    root.innerHTML=`<div class="cx"><div class="card">
+      <div class="logo-block"><div class="logo-ball">🎾</div><div><h1>Pádel Club</h1><p>${isReg?'Crea tu cuenta':'Bienvenido'}</p></div></div>
+      ${S.ok?`<div class="msg msg-ok"><i class="ti ti-circle-check"></i> ${S.ok}</div>`:''}
+      ${S.err?`<div class="msg msg-err"><i class="ti ti-alert-circle"></i> ${S.err}</div>`:''}
+      ${isReg?`<div class="fg"><label>Nombre</label><input type="text" id="f-name" placeholder="Nombre Apellido" autofocus/></div>`:''}
+      <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="email@ejemplo.com" ${!isReg?'autofocus':''}/></div>
+      <div class="fg"><label>Contraseña</label><input type="password" id="f-pass" placeholder="Mínimo 6 caracteres"/></div>
+      <button class="btn btn-green" onclick="${isReg?'doRegister()':'doLogin()'}" ${S.loading?'disabled':''}>
+        ${S.loading?'Cargando...':(isReg?'Crear cuenta':'Entrar')}</button>
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="set({loginMode:'${isReg?'login':'register'}',err:null,ok:null})">
+        ${isReg?'¿Ya tienes cuenta? Iniciar sesión':'¿Primera vez? Crear cuenta'}</button>
+      <button class="btn btn-ghost" style="margin-top:4px;font-size:12px" onclick="set({view:'config',err:null})">
+        <i class="ti ti-settings" style="font-size:13px;vertical-align:-1px"></i> Cambiar configuración</button>
+    </div></div>`;
+    return;
+  }
+
+  if(S.view==='app'){
+    const uname=S.profile?.name||S.user?.email?.split('@')[0]||'?';
+    const isAdmin=S.profile?.is_admin;
+    let content='';
+
+    // ── RANKING ──
+    if(S.tab==='ranking'){
+      const rows=S.ranking.map((p,i)=>{
+        const wr=p.played>0?Math.round(p.wins/p.played*100):0;
+        const bc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+        const isMe=p.id===S.user?.id;
+        const diff=p.gamesFor-p.gamesAgainst;
+        return`<tr>
+          <td><span class="rbadge ${bc}">${i+1}</span></td>
+          <td style="font-weight:600;${isMe?'color:var(--green)':''}">${p.name||p.email.split('@')[0]}${isMe?' <span style="font-size:11px;color:var(--text2);font-weight:400">(tú)</span>':''}</td>
+          <td style="text-align:center;font-weight:700;color:var(--green)">${p.points}</td>
+          <td style="text-align:center">${p.wins}</td>
+          <td style="text-align:center">${p.losses}</td>
+          <td style="text-align:center">${p.played}</td>
+          <td style="text-align:center;color:${diff>=0?'var(--success)':'var(--danger)'}">${diff>=0?'+':''}${diff}</td>
+          <td style="text-align:right"><span class="pill pill-green">${wr}%</span></td>
+        </tr>`;
+      }).join('');
+      content=`<p class="section-title">Clasificación general</p>
+        <div class="card">${S.ranking.length===0
+          ?`<div class="empty"><div class="ico">🏆</div><p>Sin partidos registrados</p></div>`
+          :`<table><thead><tr><th>#</th><th>Jugador</th><th style="text-align:center">Pts</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:center">J</th><th style="text-align:center">+/-</th><th style="text-align:right">%V</th></tr></thead><tbody>${rows}</tbody></table>`}
+        </div>`;
+    }
+
+    // ── PARTIDOS ──
+    if(S.tab==='matches'){
+      const freeMatches=S.matches.filter(m=>!m.tournament_id);
+      const items=freeMatches.map(m=>{
+        const ms=S.sets.filter(s=>s.match_id===m.id).sort((a,b)=>a.set_number-b.set_number);
+        const w1=m.winner_team===1,w2=m.winner_team===2;
+        const setsHtml=ms.map(s=>{
+          const sw1=s.games_team1>s.games_team2;
+          return`<span class="set-pill ${sw1?'win-set':''}">${s.games_team1}–${s.games_team2}</span>
+                 <span class="set-pill ${!sw1?'win-set':''}">${s.games_team2}–${s.games_team1}</span>`;
+        }).join('<span style="font-size:11px;color:var(--text3);padding:0 2px">|</span>');
+        return`<div class="match-item">
+          <div class="mdate"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px"></i> ${fdate(m.created_at)}</div>
+          <div class="mrow">
+            <span class="mteam ${w1?'win':''}">${pname(m.player1_id)} / ${pname(m.player2_id)}</span>
+            <span class="mscore">${w1?'✓':''}${w2?'✓':''}</span>
+            <span class="mteam ${w2?'win':''}" style="text-align:right">${pname(m.player3_id)} / ${pname(m.player4_id)}</span>
+          </div>
+          <div class="sets-row" style="justify-content:center;margin-top:6px">${setsHtml}</div>
+        </div>`;
+      }).join('');
+      content=`<p class="section-title">Historial de partidos libres</p>
+        <div class="card">${freeMatches.length===0
+          ?`<div class="empty"><div class="ico">🎾</div><p>Sin partidos registrados</p></div>`
+          :items}
+        </div>`;
+    }
+
+    // ── NUEVO PARTIDO ──
+    if(S.tab==='new'){
+      const setsRows=S.np.sets.map((s,i)=>`
+        <div style="margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <span style="font-size:12px;font-weight:600;color:var(--text2);width:50px">Set ${i+1}</span>
+            ${i>=2?`<button onclick="removeSetRow(${i})" class="btn btn-ghost btn-sm" style="margin-left:auto;color:var(--danger);border-color:var(--danger)">✕ Quitar</button>`:''}
+          </div>
+          <div class="sets-grid">
+            <input type="number" min="0" max="9" placeholder="0" id="sg1-${i}" class="set-num-input"/>
+            <span class="set-vs">–</span>
+            <input type="number" min="0" max="9" placeholder="0" id="sg2-${i}" class="set-num-input"/>
+          </div>
+        </div>`).join('');
+      content=`<p class="section-title">Registrar partido</p>
+        ${S.err?`<div class="msg msg-err"><i class="ti ti-alert-circle"></i> ${S.err}</div>`:''}
+        ${S.ok?`<div class="msg msg-ok"><i class="ti ti-circle-check"></i> ${S.ok}</div>`:''}
+        <div class="card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1rem">
+            <div><p style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px">PAREJA 1</p>
+              <div class="fg"><label>Jugador 1</label>${sel('sel-p1',S.np.p1)}</div>
+              <div class="fg"><label>Jugador 2</label>${sel('sel-p2',S.np.p2)}</div>
+            </div>
+            <div><p style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px">PAREJA 2</p>
+              <div class="fg"><label>Jugador 3</label>${sel('sel-p3',S.np.p3)}</div>
+              <div class="fg"><label>Jugador 4</label>${sel('sel-p4',S.np.p4)}</div>
+            </div>
+          </div>
+          <div style="border-top:.5px solid var(--border);padding-top:1rem;margin-bottom:1rem">
+            <p style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px">RESULTADO POR SETS</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px;font-weight:600;color:var(--text2)">
+              <span style="text-align:center">PAREJA 1</span><span style="text-align:center">PAREJA 2</span>
+            </div>
+            ${setsRows}
+            ${S.np.sets.length<3?`<button onclick="addSetRow()" class="btn btn-ghost btn-sm" style="margin-top:4px">+ Añadir set 3</button>`:''}
+          </div>
+          <div class="fg"><label>Asociar a torneo (opcional)</label>${tsel('sel-tid',S.np.tid)}</div>
+          <button class="btn btn-green" onclick="saveMatch()" ${S.loading?'disabled':''}>${S.loading?'Guardando...':'Guardar partido'}</button>
+        </div>`;
+    }
+
+    // ── TORNEOS ──
+    if(S.tab==='torneos'){
+      // lista de torneos
+      const tCards=S.tournaments.map(t=>{
+        const teams=S.tTeams.filter(x=>x.tournament_id===t.id);
+        const canJoin=t.status==='approved'&&!teams.find(x=>x.player1_id===S.user?.id||x.player2_id===S.user?.id);
+        const isCreator=t.created_by===S.user?.id;
+        const otherPlayers=S.players.filter(p=>p.id!==S.user?.id);
+        const joinOpts=otherPlayers.map(p=>`<option value="${p.id}">${p.name||p.email.split('@')[0]}</option>`).join('');
+        return`<div class="t-card">
+          <div class="t-header">
+            <div>
+              <div class="t-name">${t.name}</div>
+              <div class="t-meta">${typePill(t.type)} ${statusPill(t.status)} · ${teams.length} parejas · ${fdate(t.created_at)}</div>
+            </div>
+            <div class="t-actions">
+              ${isAdmin&&t.status==='pending'?`<button class="btn btn-green btn-sm" onclick="approveTournament('${t.id}')">Aprobar</button>`:''}
+              ${(isAdmin||isCreator)&&t.status==='approved'?`<button class="btn btn-green btn-sm" onclick="startTournament('${t.id}')">Iniciar</button>`:''}
+              ${t.status!=='pending'&&t.status!=='finished'?`<button class="btn btn-ghost btn-sm" onclick="set({activeTid:'${t.id}',tab:'torneo-detalle'})">Ver →</button>`:''}
+            </div>
+          </div>
+          ${canJoin?`<div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+            <select id="join-p2-${t.id}" style="flex:1"><option value="">Elige compañero</option>${joinOpts}</select>
+            <button class="btn btn-green btn-sm" onclick="joinTournament('${t.id}')">Apuntarse</button>
+          </div>`:''}
+          ${teams.length>0?`<div style="margin-top:10px;font-size:12px;color:var(--text2)">${teams.map(tm=>`<span style="margin-right:8px">• ${pname(tm.player1_id)} / ${pname(tm.player2_id)}</span>`).join('')}</div>`:''}
+        </div>`;
+      }).join('');
+
+      content=`
+        <p class="section-title">Torneos</p>
+        ${S.err?`<div class="msg msg-err"><i class="ti ti-alert-circle"></i> ${S.err}</div>`:''}
+        ${S.ok?`<div class="msg msg-ok"><i class="ti ti-circle-check"></i> ${S.ok}</div>`:''}
+        <div class="card">
+          <p style="font-size:14px;font-weight:600;margin-bottom:12px">Crear torneo</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="fg"><label>Nombre</label><input type="text" id="f-tname" placeholder="Torneo Verano 2025"/></div>
+            <div class="fg"><label>Formato</label>
+              <select id="f-ttype">
+                <option value="round_robin">Round Robin (todos vs todos)</option>
+                <option value="elimination">Eliminatoria (brackets)</option>
+                <option value="combined">Combinado (RR + eliminatoria)</option>
+              </select>
+            </div>
+          </div>
+          <div class="msg msg-warn"><i class="ti ti-info-circle"></i> El torneo quedará pendiente hasta que un admin lo apruebe.</div>
+          <button class="btn btn-green" onclick="createTournament()" ${S.loading?'disabled':''}>${S.loading?'Creando...':'Crear torneo'}</button>
+        </div>
+        ${S.tournaments.length===0
+          ?`<div class="empty"><div class="ico">🏅</div><p>Sin torneos todavía</p></div>`
+          :tCards}`;
+    }
+
+    // ── DETALLE TORNEO ──
+    if(S.tab==='torneo-detalle'&&S.activeTid){
+      const t=S.tournaments.find(x=>x.id===S.activeTid);
+      const teams=S.tTeams.filter(x=>x.tournament_id===S.activeTid);
+      const tmatches=S.matches.filter(m=>m.tournament_id===S.activeTid);
+
+      // clasificación round robin
+      const rrStats={};
+      teams.forEach(tm=>{rrStats[tm.id]={...tm,pts:0,wins:0,losses:0,gf:0,ga:0,played:0}});
+      tmatches.forEach(m=>{
+        const ms=S.sets.filter(s=>s.match_id===m.id);
+        const gf1=ms.reduce((a,x)=>a+x.games_team1,0),gf2=ms.reduce((a,x)=>a+x.games_team2,0);
+        const t1=teams.find(tm=>tm.player1_id===m.player1_id||tm.player2_id===m.player1_id);
+        const t2=teams.find(tm=>tm.player1_id===m.player3_id||tm.player2_id===m.player3_id);
+        if(t1&&rrStats[t1.id]){rrStats[t1.id].played++;rrStats[t1.id].gf+=gf1;rrStats[t1.id].ga+=gf2;if(m.winner_team===1){rrStats[t1.id].pts+=3;rrStats[t1.id].wins++}else rrStats[t1.id].losses++}
+        if(t2&&rrStats[t2.id]){rrStats[t2.id].played++;rrStats[t2.id].gf+=gf2;rrStats[t2.id].ga+=gf1;if(m.winner_team===2){rrStats[t2.id].pts+=3;rrStats[t2.id].wins++}else rrStats[t2.id].losses++}
+      });
+      const rrSorted=Object.values(rrStats).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
+
+      const rrTable=`<div class="group-title">CLASIFICACIÓN</div>
+        <table><thead><tr><th>#</th><th>Pareja</th><th style="text-align:center">Pts</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:center">J</th><th style="text-align:center">+/-</th></tr></thead>
+        <tbody>${rrSorted.map((tm,i)=>{
+          const diff=tm.gf-tm.ga;
+          const bc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+          return`<tr><td><span class="rbadge ${bc}">${i+1}</span></td>
+            <td style="font-weight:600">${pname(tm.player1_id)} / ${pname(tm.player2_id)}</td>
+            <td style="text-align:center;font-weight:700;color:var(--green)">${tm.pts}</td>
+            <td style="text-align:center">${tm.wins}</td><td style="text-align:center">${tm.losses}</td>
+            <td style="text-align:center">${tm.played}</td>
+            <td style="text-align:center;color:${diff>=0?'var(--success)':'var(--danger)'}">${diff>=0?'+':''}${diff}</td>
+          </tr>`;}).join('')}</tbody></table>`;
+
+      const matchList=tmatches.length===0
+        ?`<div class="empty"><div class="ico">🎾</div><p>Sin partidos en este torneo aún</p></div>`
+        :tmatches.map(m=>{
+          const ms=S.sets.filter(s=>s.match_id===m.id).sort((a,b)=>a.set_number-b.set_number);
+          const w1=m.winner_team===1;
+          const sHtml=ms.map(s=>{const sw1=s.games_team1>s.games_team2;return`<span class="set-pill ${sw1?'win-set':''}">${s.games_team1}–${s.games_team2}</span>`}).join(' ');
+          return`<div class="match-item">
+            <div class="mdate">${m.tournament_round||''} · ${fdate(m.created_at)}</div>
+            <div class="mrow">
+              <span class="mteam ${w1?'win':''}">${pname(m.player1_id)} / ${pname(m.player2_id)}</span>
+              <span class="mscore">${w1?'WIN':''}</span>
+              <span class="mteam ${!w1?'win':''}" style="text-align:right">${pname(m.player3_id)} / ${pname(m.player4_id)}</span>
+            </div>
+            <div class="sets-row" style="justify-content:center;margin-top:5px">${sHtml}</div>
+          </div>`;}).join('');
+
+      content=`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <button class="btn btn-ghost btn-sm" onclick="set({tab:'torneos'})">← Volver</button>
+          <p class="section-title" style="margin:0">${t?.name}</p>
+          ${statusPill(t?.status)}
+        </div>
+        <div class="sub-tabs">
+          <button class="sub-tab ${S.tSubTab==='clasificacion'?'active':''}" onclick="set({tSubTab:'clasificacion'})">Clasificación</button>
+          <button class="sub-tab ${S.tSubTab==='partidos'?'active':''}" onclick="set({tSubTab:'partidos'})">Partidos</button>
+        </div>
+        ${S.tSubTab==='clasificacion'?`<div class="card">${rrTable}</div>`:``}
+        ${S.tSubTab==='partidos'?`<div class="card">${matchList}</div>`:``}`;
+    }
+
+    // ── PERFIL ──
+    if(S.tab==='profile'){
+      const me=S.ranking.find(p=>p.id===S.user?.id)||{wins:0,losses:0,played:0,points:0,gamesFor:0,gamesAgainst:0};
+      const wr=me.played>0?Math.round(me.wins/me.played*100):0;
+      const diff=me.gamesFor-me.gamesAgainst;
+      content=`<p class="section-title">Mi perfil</p>
+        ${S.ok?`<div class="msg msg-ok"><i class="ti ti-circle-check"></i> ${S.ok}</div>`:''}
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:1.25rem">
+            <div class="pavatar">${ini(uname)}</div>
+            <div><p style="font-size:19px;font-weight:700">${uname}</p>
+              <p style="font-size:13px;color:var(--text2)">${S.user?.email}</p>
+              ${S.profile?.is_admin?`<span class="pill pill-warn" style="font-size:11px">Admin</span>`:''}
+            </div>
+          </div>
+          <div class="mgrid">
+            <div class="mcard"><div class="mcard-label">Partidos</div><div class="mcard-val">${me.played}</div></div>
+            <div class="mcard"><div class="mcard-label">Victorias</div><div class="mcard-val">${me.wins}</div></div>
+            <div class="mcard"><div class="mcard-label">% victorias</div><div class="mcard-val">${wr}%</div></div>
+            <div class="mcard"><div class="mcard-label">Dif. juegos</div><div class="mcard-val" style="color:${diff>=0?'var(--success)':'var(--danger)'}">${diff>=0?'+':''}${diff}</div></div>
+          </div>
+          <div style="border-top:.5px solid var(--border);padding-top:1.25rem">
+            <div class="fg"><label>Cambiar nombre</label><input type="text" id="f-editname" value="${uname}" placeholder="Tu nombre completo"/></div>
+            <button class="btn btn-green" onclick="updateName()">Guardar nombre</button>
+          </div>
+        </div>`;
+    }
+
+    root.innerHTML=`
+      <nav class="nav">
+        <div class="nav-logo"><div class="nav-ball">🎾</div><span>Pádel Club</span></div>
+        <div class="nav-tabs">
+          <button class="nav-tab ${S.tab==='ranking'?'active':''}" onclick="set({tab:'ranking',err:null,ok:null})"><i class="ti ti-trophy" style="font-size:13px;vertical-align:-1px"></i> Ranking</button>
+          <button class="nav-tab ${S.tab==='matches'?'active':''}" onclick="set({tab:'matches',err:null,ok:null})"><i class="ti ti-list" style="font-size:13px;vertical-align:-1px"></i> Partidos</button>
+          <button class="nav-tab ${S.tab==='new'?'active':''}" onclick="set({tab:'new',err:null,ok:null})"><i class="ti ti-plus" style="font-size:13px;vertical-align:-1px"></i> Añadir</button>
+          <button class="nav-tab ${S.tab==='torneos'||S.tab==='torneo-detalle'?'active':''}" onclick="set({tab:'torneos',err:null,ok:null})"><i class="ti ti-tournament" style="font-size:13px;vertical-align:-1px"></i> Torneos</button>
+          <button class="nav-tab ${S.tab==='profile'?'active':''}" onclick="set({tab:'profile',err:null,ok:null})"><i class="ti ti-user" style="font-size:13px;vertical-align:-1px"></i> Perfil</button>
+        </div>
+        <div class="nav-right">
+          <div class="avatar">${ini(uname)}</div>
+          <button class="btn-out" onclick="doLogout()">Salir</button>
+        </div>
+      </nav>
+      <div class="main">${content}</div>`;
+  }
+}
+
+const cfg=getCfg();
+if(cfg){initSB(cfg.url,cfg.key);S.view='loading';boot().catch(()=>set({view:'auth'}))}
+render();
+</script>
 </body>
 </html>
