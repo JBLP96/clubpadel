@@ -1007,8 +1007,11 @@ function render(){
   }
 }
 
-const cfg=getCfg();
-if(cfg){initSB(cfg.url,cfg.key);S.view='loading';boot().catch(()=>set({view:'auth'}))}
+const SUPABASE_URL='https://qungedgfgtyrzbutsqij.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bmdlZGdmZ3R5cnpidXRzcWlqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTYwNDM3NywiZXhwIjoyMDk3MTgwMzc3fQ.qBV2pfN204fOC5JDg-6N5pJiJq3kcliiqre62sqtRR0';
+initSB(SUPABASE_URL, SUPABASE_KEY);
+S.view='loading';
+boot().catch(()=>set({view:'auth'}));
 render();
 </script>
 </body>
