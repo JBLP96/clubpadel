@@ -29,7 +29,6 @@
       --warn-bg:#2a2000;--warn:#FAC775;
     }}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    /* NAV */
     .nav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
     .nav-logo{display:flex;align-items:center;gap:8px}
     .nav-ball{width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px}
@@ -41,11 +40,9 @@
     .nav-right{display:flex;align-items:center;gap:8px}
     .avatar{width:32px;height:32px;border-radius:50%;background:var(--info-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--info);border:.5px solid var(--border)}
     .btn-out{font-size:12px;padding:5px 12px;background:transparent;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-family:inherit}
-    /* LAYOUT */
     .main{max-width:760px;margin:0 auto;padding:1.5rem 1rem}
     .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
     .section-title{font-size:16px;font-weight:600;margin-bottom:1rem}
-    /* FORMS */
     label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px;font-weight:500}
     .fg{margin-bottom:1rem}
     input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{
@@ -56,19 +53,17 @@
     .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-dark)}
     .btn-green:disabled{opacity:.5;cursor:not-allowed}
     .btn-ghost{background:transparent;color:var(--text2);border:.5px solid var(--border2)}.btn-ghost:hover{background:var(--surface2)}
+    .btn-danger{background:var(--danger-bg);color:var(--danger);border:.5px solid var(--danger)}.btn-danger:hover{opacity:.8}
     .btn-sm{padding:5px 12px;font-size:12px;width:auto}
-    /* MSGS */
     .msg{font-size:13px;padding:10px 12px;border-radius:var(--radius-sm);margin-bottom:1rem;display:flex;align-items:center;gap:6px}
     .msg-err{background:var(--danger-bg);color:var(--danger)}
     .msg-ok{background:var(--success-bg);color:var(--success)}
     .msg-warn{background:var(--warn-bg);color:var(--warn)}
-    /* CENTER */
     .cx{max-width:440px;margin:2rem auto;padding:0 1rem}
     .logo-block{display:flex;align-items:center;gap:12px;margin-bottom:1.75rem}
     .logo-ball{width:44px;height:44px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:22px}
     .logo-block h1{font-size:22px;font-weight:700}
     .logo-block p{font-size:13px;color:var(--text2);margin-top:2px}
-    /* RANKING */
     table{width:100%;border-collapse:collapse;font-size:14px}
     th{text-align:left;padding:8px 10px;font-size:12px;font-weight:600;color:var(--text2);border-bottom:.5px solid var(--border)}
     td{padding:10px 10px;border-bottom:.5px solid var(--border);vertical-align:middle}
@@ -81,7 +76,6 @@
     .pill-warn{background:var(--warn-bg);color:var(--warn)}
     .pill-info{background:var(--info-bg);color:var(--info)}
     .pill-red{background:var(--danger-bg);color:var(--danger)}
-    /* MATCH */
     .match-item{padding:13px 0;border-bottom:.5px solid var(--border)}
     .match-item:last-child{border-bottom:none}
     .mdate{font-size:11px;color:var(--text3);margin-bottom:4px}
@@ -92,46 +86,71 @@
     .sets-row{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
     .set-pill{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--surface2);color:var(--text2);border:.5px solid var(--border)}
     .set-pill.win-set{background:var(--success-bg);color:var(--success)}
-    /* SET INPUT */
     .sets-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;max-width:300px}
     .set-num-input{text-align:center;font-size:20px;font-weight:700;padding:10px 6px}
     .set-vs{text-align:center;font-size:16px;font-weight:700;color:var(--text2)}
-    /* PROFILE */
     .pavatar{width:64px;height:64px;border-radius:50%;background:var(--info-bg);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--info);border:.5px solid var(--border)}
     .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.25rem}
     .mcard{background:var(--surface2);border-radius:var(--radius-sm);padding:12px;text-align:center}
     .mcard-label{font-size:11px;color:var(--text2);margin-bottom:3px;font-weight:500}
     .mcard-val{font-size:22px;font-weight:700}
-    /* TOURNAMENT */
     .t-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:10px}
     .t-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
     .t-name{font-size:15px;font-weight:600}
     .t-meta{font-size:12px;color:var(--text2);margin-top:2px}
     .t-actions{display:flex;gap:6px;flex-shrink:0}
-    /* BRACKET */
-    .bracket{overflow-x:auto;padding-bottom:8px}
-    .bracket-round{display:flex;flex-direction:column;gap:16px;min-width:200px}
-    .bracket-match{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px}
-    .bracket-team{display:flex;justify-content:space-between;padding:3px 0}
-    .bracket-team.win{font-weight:600;color:var(--green)}
-    /* GROUP TABLE */
-    .group-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:.05em}
-    /* EMPTY */
-    .empty{text-align:center;padding:2rem;color:var(--text2);font-size:14px}
-    .empty .ico{font-size:36px;margin-bottom:8px}
-    /* SETUP */
-    .setup{background:var(--success-bg);border:.5px solid var(--green-mid);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.25rem}
-    .setup h3{font-size:13px;font-weight:600;color:var(--green-deep);margin-bottom:6px}
-    .setup p{font-size:12px;color:var(--green-text);line-height:1.6}
-    .sql-block{display:block;background:rgba(0,0,0,0.08);padding:10px;border-radius:var(--radius-sm);font-family:'Courier New',monospace;font-size:10px;color:var(--green-deep);margin-top:8px;white-space:pre;overflow-x:auto;line-height:1.5}
-    /* TABS inside page */
     .sub-tabs{display:flex;gap:4px;margin-bottom:1rem;border-bottom:.5px solid var(--border);padding-bottom:8px}
     .sub-tab{padding:5px 12px;font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--text2);border-radius:var(--radius-sm);font-family:inherit;font-weight:500}
     .sub-tab.active{background:var(--green);color:#fff}
+    .empty{text-align:center;padding:2rem;color:var(--text2);font-size:14px}
+    .empty .ico{font-size:36px;margin-bottom:8px}
+    .setup{background:var(--success-bg);border:.5px solid var(--green-mid);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.25rem}
+    .setup h3{font-size:13px;font-weight:600;color:var(--green-deep);margin-bottom:6px}
+    .setup p{font-size:12px;color:var(--green-text);line-height:1.6}
+
+    /* STATS AVANZADAS */
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+    .stat-block{background:var(--surface2);border-radius:var(--radius-sm);padding:14px}
+    .stat-block-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.05em;text-transform:uppercase}
+    .stat-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--border);font-size:13px}
+    .stat-row:last-child{border-bottom:none}
+    .stat-name{color:var(--text2)}
+    .stat-val{font-weight:700;color:var(--text)}
+    .stat-val.green{color:var(--success)}
+    .stat-val.red{color:var(--danger)}
+
+    /* BRACKET */
+    .bracket-wrapper{overflow-x:auto;padding-bottom:1rem}
+    .bracket-rounds{display:flex;gap:24px;align-items:flex-start;min-width:max-content;padding:1rem 0}
+    .bracket-round{display:flex;flex-direction:column;gap:12px;min-width:180px}
+    .bracket-round-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;text-align:center}
+    .bracket-match{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+    .bracket-team{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;font-size:12px;border-bottom:.5px solid var(--border)}
+    .bracket-team:last-child{border-bottom:none}
+    .bracket-team.win{background:var(--success-bg);font-weight:700;color:var(--success)}
+    .bracket-team.lose{color:var(--text3)}
+    .bracket-score{font-weight:700;font-size:13px}
+
+    /* ADMIN */
+    .admin-table td{font-size:13px}
+    .clickable{cursor:pointer;color:var(--info);text-decoration:underline}
+
+    /* H2H */
+    .h2h-selector{display:flex;gap:10px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+    .h2h-vs{font-size:18px;font-weight:700;color:var(--text2)}
+    .h2h-result{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center;margin-bottom:1rem}
+    .h2h-name{font-size:15px;font-weight:700}
+    .h2h-wins{font-size:36px;font-weight:800}
+    .h2h-wins.green{color:var(--success)}
+    .h2h-wins.red{color:var(--danger)}
+    .h2h-wins.draw{color:var(--text2)}
+    .h2h-middle{font-size:13px;color:var(--text2)}
+
     @media(max-width:600px){
       .nav-logo span{display:none}
       .nav-tab{padding:5px 7px;font-size:11px}
       .mgrid{grid-template-columns:repeat(2,1fr)}
+      .stats-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -149,13 +168,14 @@ let S={
   tournaments:[],tTeams:[],
   loading:false,err:null,ok:null,
   loginMode:'login',
-  // nuevo partido
   np:{p1:'',p2:'',p3:'',p4:'',sets:[{g1:'',g2:''},{g1:'',g2:''}],tid:'',tround:''},
-  // nuevo torneo
   nt:{name:'',type:'round_robin'},
-  // vista torneo activo
   activeTid:null,
   tSubTab:'clasificacion',
+  // nuevos
+  statsPlayerId:null,
+  h2hP1:'',h2hP2:'',
+  adminSubTab:'players',
 };
 
 function set(u,skip){S={...S,...u};if(!skip)render()}
@@ -201,13 +221,76 @@ function buildRanking(players,matches,sets){
   return Object.values(s).sort((a,b)=>b.points-a.points||b.wins-a.wins||(b.gamesFor-b.gamesAgainst)-(a.gamesFor-a.gamesAgainst));
 }
 
-// calcular ganador a partir de sets
 function calcWinner(setsArr){
   let w1=0,w2=0;
   setsArr.forEach(s=>{const g1=parseInt(s.g1)||0,g2=parseInt(s.g2)||0;if(g1>g2)w1++;else if(g2>g1)w2++});
   if(w1>=2)return 1;
   if(w2>=2)return 2;
   return null;
+}
+
+// ESTADÍSTICAS AVANZADAS
+function getPlayerStats(pid){
+  const allMatches=S.matches.filter(m=>m.winner_team&&
+    (m.player1_id===pid||m.player2_id===pid||m.player3_id===pid||m.player4_id===pid));
+
+  // racha actual
+  let streak=0,streakType=null;
+  const sorted=[...allMatches].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  for(const m of sorted){
+    const inT1=m.player1_id===pid||m.player2_id===pid;
+    const won=(inT1&&m.winner_team===1)||(!inT1&&m.winner_team===2);
+    if(streakType===null){streakType=won;streak=1}
+    else if(won===streakType)streak++;
+    else break;
+  }
+
+  // mejor compañero
+  const partners={};
+  allMatches.forEach(m=>{
+    const inT1=m.player1_id===pid||m.player2_id===pid;
+    const won=(inT1&&m.winner_team===1)||(!inT1&&m.winner_team===2);
+    const partner=inT1?(m.player1_id===pid?m.player2_id:m.player1_id):(m.player3_id===pid?m.player4_id:m.player3_id);
+    if(!partner)return;
+    if(!partners[partner])partners[partner]={wins:0,played:0};
+    partners[partner].played++;
+    if(won)partners[partner].wins++;
+  });
+  const bestPartner=Object.entries(partners).sort((a,b)=>(b[1].wins/Math.max(b[1].played,1))-(a[1].wins/Math.max(a[1].played,1)))[0];
+
+  // rival más difícil (más derrotas contra)
+  const rivals={};
+  allMatches.forEach(m=>{
+    const inT1=m.player1_id===pid||m.player2_id===pid;
+    const lost=(inT1&&m.winner_team===2)||(!inT1&&m.winner_team===1);
+    const enemyIds=inT1?[m.player3_id,m.player4_id]:[m.player1_id,m.player2_id];
+    enemyIds.filter(Boolean).forEach(eid=>{
+      if(!rivals[eid])rivals[eid]={losses:0};
+      if(lost)rivals[eid].losses++;
+    });
+  });
+  const hardestRival=Object.entries(rivals).sort((a,b)=>b[1].losses-a[1].losses)[0];
+
+  // superficie favorita no disponible, mostramos % últimos 5
+  const last5=sorted.slice(0,5);
+  const last5wins=last5.filter(m=>{const inT1=m.player1_id===pid||m.player2_id===pid;return(inT1&&m.winner_team===1)||(!inT1&&m.winner_team===2)}).length;
+
+  return{streak,streakType,bestPartner,hardestRival,last5wins,last5total:last5.length,totalMatches:allMatches.length};
+}
+
+// H2H
+function getH2H(p1id,p2id){
+  const shared=S.matches.filter(m=>m.winner_team&&
+    (m.player1_id===p1id||m.player2_id===p1id||m.player3_id===p1id||m.player4_id===p1id)&&
+    (m.player1_id===p2id||m.player2_id===p2id||m.player3_id===p2id||m.player4_id===p2id)
+  );
+  let w1=0,w2=0;
+  shared.forEach(m=>{
+    const p1inT1=m.player1_id===p1id||m.player2_id===p1id;
+    if((p1inT1&&m.winner_team===1)||(!p1inT1&&m.winner_team===2))w1++;
+    else w2++;
+  });
+  return{matches:shared,w1,w2};
 }
 
 // AUTH
@@ -240,7 +323,6 @@ async function doLogout(){
   set({view:'auth',user:null,profile:null,tab:'ranking',err:null,ok:null});
 }
 
-// NUEVO PARTIDO
 function addSetRow(){
   const sets=[...S.np.sets,{g1:'',g2:''}];
   set({np:{...S.np,sets}});
@@ -258,7 +340,6 @@ async function saveMatch(){
   const s4=document.getElementById('sel-p4').value;
   if(!s1||!s2||!s3||!s4)return set({err:'Selecciona los 4 jugadores'});
   if(new Set([s1,s2,s3,s4]).size<4)return set({err:'Un jugador no puede repetirse'});
-  // leer sets del DOM
   const setsData=[];
   for(let i=0;i<m.sets.length;i++){
     const g1=document.getElementById('sg1-'+i)?.value;
@@ -286,7 +367,18 @@ async function saveMatch(){
   await loadAll();
 }
 
-// TORNEOS
+async function deleteMatch(id){
+  if(!confirm('¿Eliminar este partido?'))return;
+  await sb.from('match_sets').delete().eq('match_id',id);
+  await sb.from('matches').delete().eq('id',id);
+  await loadAll();
+}
+
+async function toggleAdmin(uid,current){
+  await sb.from('profiles').update({is_admin:!current}).eq('id',uid);
+  await loadAll();
+}
+
 async function createTournament(){
   const name=document.getElementById('f-tname')?.value.trim();
   const type=document.getElementById('f-ttype')?.value;
@@ -302,6 +394,19 @@ async function approveTournament(id){
 }
 async function startTournament(id){
   await sb.from('tournaments').update({status:'active',started_at:new Date().toISOString()}).eq('id',id);
+  await loadAll();
+}
+async function finishTournament(id){
+  await sb.from('tournaments').update({status:'finished'}).eq('id',id);
+  await loadAll();
+}
+async function deleteTournament(id){
+  if(!confirm('¿Eliminar este torneo y todos sus partidos?'))return;
+  const tms=S.matches.filter(m=>m.tournament_id===id);
+  for(const m of tms){await sb.from('match_sets').delete().eq('match_id',m.id);}
+  await sb.from('matches').delete().eq('tournament_id',id);
+  await sb.from('tournament_teams').delete().eq('tournament_id',id);
+  await sb.from('tournaments').delete().eq('id',id);
   await loadAll();
 }
 async function joinTournament(tid){
@@ -329,7 +434,6 @@ function handleCfg(){
   catch(e){set({err:'Credenciales inválidas'})}
 }
 
-// HELPERS
 function pname(id){const p=S.players.find(x=>x.id===id);return p?(p.name||p.email.split('@')[0]):'?'}
 function ini(n){if(!n)return'?';return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
 function fdate(s){if(!s)return'';return new Date(s).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
@@ -351,6 +455,47 @@ function typePill(t){
   return `<span class="pill pill-info" style="font-size:11px">${label[t]||t}</span>`;
 }
 
+// BRACKET BUILDER
+function buildBracket(tid){
+  const teams=S.tTeams.filter(x=>x.tournament_id===tid);
+  const tmatches=S.matches.filter(m=>m.tournament_id===tid&&m.winner_team);
+  // agrupar por ronda
+  const rounds={};
+  tmatches.forEach(m=>{
+    const r=m.tournament_round||'Ronda 1';
+    if(!rounds[r])rounds[r]=[];
+    rounds[r].push(m);
+  });
+  if(Object.keys(rounds).length===0){
+    return`<div class="empty"><div class="ico">🏆</div><p>Sin partidos de eliminatoria registrados</p></div>`;
+  }
+  const roundOrder=['Ronda 1','Cuartos','Semifinal','Final'];
+  const sortedRounds=Object.keys(rounds).sort((a,b)=>{
+    const ia=roundOrder.indexOf(a),ib=roundOrder.indexOf(b);
+    return(ia===-1?99:ia)-(ib===-1?99:ib);
+  });
+  const roundsHtml=sortedRounds.map(r=>{
+    const matchesHtml=rounds[r].map(m=>{
+      const w1=m.winner_team===1,w2=m.winner_team===2;
+      const ms=S.sets.filter(s=>s.match_id===m.id).sort((a,b)=>a.set_number-b.set_number);
+      const score1=ms.map(s=>s.games_team1).join('-');
+      const score2=ms.map(s=>s.games_team2).join('-');
+      return`<div class="bracket-match">
+        <div class="bracket-team ${w1?'win':'lose'}">
+          <span>${pname(m.player1_id)} / ${pname(m.player2_id)}</span>
+          <span class="bracket-score">${score1}</span>
+        </div>
+        <div class="bracket-team ${w2?'win':'lose'}">
+          <span>${pname(m.player3_id)} / ${pname(m.player4_id)}</span>
+          <span class="bracket-score">${score2}</span>
+        </div>
+      </div>`;
+    }).join('');
+    return`<div class="bracket-round"><div class="bracket-round-title">${r}</div>${matchesHtml}</div>`;
+  }).join('');
+  return`<div class="bracket-wrapper"><div class="bracket-rounds">${roundsHtml}</div></div>`;
+}
+
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function render(){
   const root=document.getElementById('root');
@@ -359,9 +504,8 @@ function render(){
   if(S.view==='config'){
     root.innerHTML=`<div class="cx"><div class="card">
       <div class="logo-block"><div class="logo-ball">🎾</div><div><h1>Pádel Club</h1><p>Gestión de partidos y torneos</p></div></div>
-      <div class="setup"><h3>⚡ SQL requerido — ejecuta en Supabase SQL Editor</h3>
-        <p>Descarga también el archivo <strong>padel-schema-v2.sql</strong> adjunto y ejecútalo primero.</p>
-        <p style="margin-top:6px">Luego introduce tus credenciales:</p></div>
+      <div class="setup"><h3>⚡ Configura tu proyecto Supabase</h3>
+        <p>Introduce las credenciales de tu proyecto para conectarte.</p></div>
       ${S.err?`<div class="msg msg-err"><i class="ti ti-alert-circle"></i> ${S.err}</div>`:''}
       <div class="fg"><label>URL del proyecto</label><input type="text" id="f-url" placeholder="https://xxxx.supabase.co"/></div>
       <div class="fg"><label>Anon Key</label><input type="text" id="f-key" placeholder="eyJhbGci..."/></div>
@@ -379,12 +523,11 @@ function render(){
       ${isReg?`<div class="fg"><label>Nombre</label><input type="text" id="f-name" placeholder="Nombre Apellido" autofocus/></div>`:''}
       <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="email@ejemplo.com" ${!isReg?'autofocus':''}/></div>
       <div class="fg"><label>Contraseña</label><input type="password" id="f-pass" placeholder="Mínimo 6 caracteres"/></div>
-      <button class="btn btn-green" onclick="${isReg?'doRegister()':'doLogin()'}" ${S.loading?'disabled':''}>
-        ${S.loading?'Cargando...':(isReg?'Crear cuenta':'Entrar')}</button>
+      <button class="btn btn-green" onclick="${isReg?'doRegister()':'doLogin()'}"> ${S.loading?'Cargando...':(isReg?'Crear cuenta':'Entrar')}</button>
       <button class="btn btn-ghost" style="margin-top:8px" onclick="set({loginMode:'${isReg?'login':'register'}',err:null,ok:null})">
         ${isReg?'¿Ya tienes cuenta? Iniciar sesión':'¿Primera vez? Crear cuenta'}</button>
       <button class="btn btn-ghost" style="margin-top:4px;font-size:12px" onclick="set({view:'config',err:null})">
-        <i class="ti ti-settings" style="font-size:13px;vertical-align:-1px"></i> Cambiar configuración</button>
+        <i class="ti ti-settings"></i> Cambiar configuración</button>
     </div></div>`;
     return;
   }
@@ -401,9 +544,11 @@ function render(){
         const bc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
         const isMe=p.id===S.user?.id;
         const diff=p.gamesFor-p.gamesAgainst;
-        return`<tr>
+        return`<tr style="cursor:pointer" onclick="set({tab:'stats',statsPlayerId:'${p.id}'})">
           <td><span class="rbadge ${bc}">${i+1}</span></td>
-          <td style="font-weight:600;${isMe?'color:var(--green)':''}">${p.name||p.email.split('@')[0]}${isMe?' <span style="font-size:11px;color:var(--text2);font-weight:400">(tú)</span>':''}</td>
+          <td style="font-weight:600;${isMe?'color:var(--green)':''}">
+            ${p.name||p.email.split('@')[0]}${isMe?' <span style="font-size:11px;color:var(--text2);font-weight:400">(tú)</span>':''}
+          </td>
           <td style="text-align:center;font-weight:700;color:var(--green)">${p.points}</td>
           <td style="text-align:center">${p.wins}</td>
           <td style="text-align:center">${p.losses}</td>
@@ -413,10 +558,142 @@ function render(){
         </tr>`;
       }).join('');
       content=`<p class="section-title">Clasificación general</p>
+        <div class="msg msg-warn" style="font-size:12px"><i class="ti ti-info-circle"></i> Haz clic en un jugador para ver sus estadísticas detalladas</div>
         <div class="card">${S.ranking.length===0
           ?`<div class="empty"><div class="ico">🏆</div><p>Sin partidos registrados</p></div>`
           :`<table><thead><tr><th>#</th><th>Jugador</th><th style="text-align:center">Pts</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:center">J</th><th style="text-align:center">+/-</th><th style="text-align:right">%V</th></tr></thead><tbody>${rows}</tbody></table>`}
         </div>`;
+    }
+
+    // ── ESTADÍSTICAS JUGADOR ──
+    if(S.tab==='stats'&&S.statsPlayerId){
+      const pid=S.statsPlayerId;
+      const player=S.players.find(p=>p.id===pid)||{};
+      const rankData=S.ranking.find(p=>p.id===pid)||{wins:0,losses:0,played:0,points:0,gamesFor:0,gamesAgainst:0};
+      const adv=getPlayerStats(pid);
+      const wr=rankData.played>0?Math.round(rankData.wins/rankData.played*100):0;
+      const diff=rankData.gamesFor-rankData.gamesAgainst;
+      const rankPos=S.ranking.findIndex(p=>p.id===pid)+1;
+
+      // últimos 5 partidos
+      const last5=S.matches.filter(m=>m.winner_team&&
+        (m.player1_id===pid||m.player2_id===pid||m.player3_id===pid||m.player4_id===pid))
+        .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+
+      const last5Html=last5.map(m=>{
+        const inT1=m.player1_id===pid||m.player2_id===pid;
+        const won=(inT1&&m.winner_team===1)||(!inT1&&m.winner_team===2);
+        const ms=S.sets.filter(s=>s.match_id===m.id).sort((a,b)=>a.set_number-b.set_number);
+        const setStr=ms.map(s=>inT1?`${s.games_team1}-${s.games_team2}`:`${s.games_team2}-${s.games_team1}`).join(' | ');
+        const partner=inT1?(m.player1_id===pid?m.player2_id:m.player1_id):(m.player3_id===pid?m.player4_id:m.player3_id);
+        const rivals=inT1?`${pname(m.player3_id)} / ${pname(m.player4_id)}`:`${pname(m.player1_id)} / ${pname(m.player2_id)}`;
+        return`<div class="match-item">
+          <div class="mdate">${fdate(m.created_at)}</div>
+          <div class="mrow">
+            <span class="mteam ${won?'win':''}">Con ${pname(partner)}</span>
+            <span class="pill ${won?'pill-green':'pill-red'}" style="white-space:nowrap">${won?'Victoria':'Derrota'}</span>
+            <span class="mteam" style="text-align:right;color:var(--text2)">vs ${rivals}</span>
+          </div>
+          <div class="sets-row" style="margin-top:4px"><span style="font-size:11px;color:var(--text3)">${setStr}</span></div>
+        </div>`;
+      }).join('');
+
+      content=`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <button class="btn btn-ghost btn-sm" onclick="set({tab:'ranking'})">← Volver</button>
+          <p class="section-title" style="margin:0">Estadísticas de ${player.name||player.email?.split('@')[0]||'Jugador'}</p>
+        </div>
+        <div class="card">
+          <div class="mgrid" style="grid-template-columns:repeat(4,1fr)">
+            <div class="mcard"><div class="mcard-label">Posición</div><div class="mcard-val">#${rankPos}</div></div>
+            <div class="mcard"><div class="mcard-label">Puntos</div><div class="mcard-val" style="color:var(--green)">${rankData.points}</div></div>
+            <div class="mcard"><div class="mcard-label">% victorias</div><div class="mcard-val">${wr}%</div></div>
+            <div class="mcard"><div class="mcard-label">Dif. juegos</div><div class="mcard-val" style="color:${diff>=0?'var(--success)':'var(--danger)'}">${diff>=0?'+':''}${diff}</div></div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-block">
+              <div class="stat-block-title">Resumen</div>
+              <div class="stat-row"><span class="stat-name">Partidos jugados</span><span class="stat-val">${rankData.played}</span></div>
+              <div class="stat-row"><span class="stat-name">Victorias</span><span class="stat-val green">${rankData.wins}</span></div>
+              <div class="stat-row"><span class="stat-name">Derrotas</span><span class="stat-val red">${rankData.losses}</span></div>
+              <div class="stat-row"><span class="stat-name">Juegos a favor</span><span class="stat-val">${rankData.gamesFor}</span></div>
+              <div class="stat-row"><span class="stat-name">Juegos en contra</span><span class="stat-val">${rankData.gamesAgainst}</span></div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-block-title">Highlights</div>
+              <div class="stat-row">
+                <span class="stat-name">Racha actual</span>
+                <span class="stat-val ${adv.streakType?'green':'red'}">${adv.streak} ${adv.streakType?'🔥':'❄️'}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Últimos 5</span>
+                <span class="stat-val">${adv.last5wins}/${adv.last5total} victorias</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Mejor compañero</span>
+                <span class="stat-val">${adv.bestPartner?pname(adv.bestPartner[0]):'—'}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Rival difícil</span>
+                <span class="stat-val red">${adv.hardestRival?pname(adv.hardestRival[0]):'—'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="section-title">Últimos 5 partidos</p>
+        <div class="card">${last5.length===0?`<div class="empty"><div class="ico">🎾</div><p>Sin partidos</p></div>`:last5Html}</div>
+        <button class="btn btn-ghost" style="margin-bottom:1rem" onclick="set({tab:'h2h',h2hP1:'${pid}',h2hP2:''})">
+          <i class="ti ti-users"></i> Ver enfrentamientos directos con este jugador
+        </button>`;
+    }
+
+    // ── H2H ──
+    if(S.tab==='h2h'){
+      const p1opts=S.players.map(p=>`<option value="${p.id}" ${S.h2hP1===p.id?'selected':''}>${p.name||p.email.split('@')[0]}</option>`).join('');
+      const p2opts=S.players.map(p=>`<option value="${p.id}" ${S.h2hP2===p.id?'selected':''}>${p.name||p.email.split('@')[0]}</option>`).join('');
+
+      let h2hContent='';
+      if(S.h2hP1&&S.h2hP2&&S.h2hP1!==S.h2hP2){
+        const {matches,w1,w2}=getH2H(S.h2hP1,S.h2hP2);
+        const total=matches.length;
+        const matchItems=matches.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).map(m=>{
+          const p1inT1=m.player1_id===S.h2hP1||m.player2_id===S.h2hP1;
+          const won=(p1inT1&&m.winner_team===1)||(!p1inT1&&m.winner_team===2);
+          const ms=S.sets.filter(s=>s.match_id===m.id).sort((a,b)=>a.set_number-b.set_number);
+          const setStr=ms.map(s=>`${s.games_team1}-${s.games_team2}`).join(' | ');
+          return`<div class="match-item">
+            <div class="mdate">${fdate(m.created_at)}</div>
+            <div class="mrow">
+              <span class="mteam ${p1inT1?(m.winner_team===1?'win':''):(m.winner_team===2?'win':'')}">${pname(m.player1_id)} / ${pname(m.player2_id)}</span>
+              <span class="pill ${won?'pill-green':'pill-red'}" style="white-space:nowrap;font-size:11px">${won?'W':'L'}</span>
+              <span class="mteam ${!p1inT1?(m.winner_team===2?'win':''):(m.winner_team===1?'win':'')}" style="text-align:right">${pname(m.player3_id)} / ${pname(m.player4_id)}</span>
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-top:3px;text-align:center">${setStr}</div>
+          </div>`;
+        }).join('');
+
+        h2hContent=`
+          <div class="card">
+            <div class="h2h-result">
+              <div><div class="h2h-name">${pname(S.h2hP1)}</div><div class="h2h-wins ${w1>w2?'green':w1<w2?'red':'draw'}">${w1}</div></div>
+              <div class="h2h-middle"><div style="font-size:22px;font-weight:700">VS</div><div style="margin-top:4px">${total} partidos</div></div>
+              <div><div class="h2h-name">${pname(S.h2hP2)}</div><div class="h2h-wins ${w2>w1?'green':w2<w1?'red':'draw'}">${w2}</div></div>
+            </div>
+          </div>
+          <p class="section-title">Historial de enfrentamientos</p>
+          <div class="card">${total===0?`<div class="empty"><div class="ico">🎾</div><p>No han jugado juntos todavía</p></div>`:matchItems}</div>`;
+      }
+
+      content=`
+        <p class="section-title">Enfrentamientos directos (H2H)</p>
+        <div class="card">
+          <div class="h2h-selector">
+            <select onchange="set({h2hP1:this.value})" style="flex:1"><option value="">Jugador 1</option>${p1opts}</select>
+            <span class="h2h-vs">VS</span>
+            <select onchange="set({h2hP2:this.value})" style="flex:1"><option value="">Jugador 2</option>${p2opts}</select>
+          </div>
+        </div>
+        ${h2hContent}`;
     }
 
     // ── PARTIDOS ──
@@ -430,8 +707,12 @@ function render(){
           return`<span class="set-pill ${sw1?'win-set':''}">${s.games_team1}–${s.games_team2}</span>
                  <span class="set-pill ${!sw1?'win-set':''}">${s.games_team2}–${s.games_team1}</span>`;
         }).join('<span style="font-size:11px;color:var(--text3);padding:0 2px">|</span>');
+        const canDelete=isAdmin||m.created_by===S.user?.id;
         return`<div class="match-item">
-          <div class="mdate"><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px"></i> ${fdate(m.created_at)}</div>
+          <div class="mdate" style="display:flex;justify-content:space-between">
+            <span><i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px"></i> ${fdate(m.created_at)}</span>
+            ${canDelete?`<button onclick="deleteMatch('${m.id}')" class="btn btn-ghost btn-sm" style="color:var(--danger);border-color:var(--danger);padding:2px 8px;font-size:11px">✕</button>`:''}
+          </div>
           <div class="mrow">
             <span class="mteam ${w1?'win':''}">${pname(m.player1_id)} / ${pname(m.player2_id)}</span>
             <span class="mscore">${w1?'✓':''}${w2?'✓':''}</span>
@@ -490,7 +771,6 @@ function render(){
 
     // ── TORNEOS ──
     if(S.tab==='torneos'){
-      // lista de torneos
       const tCards=S.tournaments.map(t=>{
         const teams=S.tTeams.filter(x=>x.tournament_id===t.id);
         const canJoin=t.status==='approved'&&!teams.find(x=>x.player1_id===S.user?.id||x.player2_id===S.user?.id);
@@ -506,6 +786,8 @@ function render(){
             <div class="t-actions">
               ${isAdmin&&t.status==='pending'?`<button class="btn btn-green btn-sm" onclick="approveTournament('${t.id}')">Aprobar</button>`:''}
               ${(isAdmin||isCreator)&&t.status==='approved'?`<button class="btn btn-green btn-sm" onclick="startTournament('${t.id}')">Iniciar</button>`:''}
+              ${isAdmin&&t.status==='active'?`<button class="btn btn-ghost btn-sm" onclick="finishTournament('${t.id}')">Finalizar</button>`:''}
+              ${isAdmin?`<button class="btn btn-sm btn-danger" onclick="deleteTournament('${t.id}')">✕</button>`:''}
               ${t.status!=='pending'&&t.status!=='finished'?`<button class="btn btn-ghost btn-sm" onclick="set({activeTid:'${t.id}',tab:'torneo-detalle'})">Ver →</button>`:''}
             </div>
           </div>
@@ -547,7 +829,6 @@ function render(){
       const teams=S.tTeams.filter(x=>x.tournament_id===S.activeTid);
       const tmatches=S.matches.filter(m=>m.tournament_id===S.activeTid);
 
-      // clasificación round robin
       const rrStats={};
       teams.forEach(tm=>{rrStats[tm.id]={...tm,pts:0,wins:0,losses:0,gf:0,ga:0,played:0}});
       tmatches.forEach(m=>{
@@ -560,7 +841,7 @@ function render(){
       });
       const rrSorted=Object.values(rrStats).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
 
-      const rrTable=`<div class="group-title">CLASIFICACIÓN</div>
+      const rrTable=`<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:.05em">CLASIFICACIÓN</div>
         <table><thead><tr><th>#</th><th>Pareja</th><th style="text-align:center">Pts</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:center">J</th><th style="text-align:center">+/-</th></tr></thead>
         <tbody>${rrSorted.map((tm,i)=>{
           const diff=tm.gf-tm.ga;
@@ -589,6 +870,8 @@ function render(){
             <div class="sets-row" style="justify-content:center;margin-top:5px">${sHtml}</div>
           </div>`;}).join('');
 
+      const bracketHtml=buildBracket(S.activeTid);
+
       content=`
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
           <button class="btn btn-ghost btn-sm" onclick="set({tab:'torneos'})">← Volver</button>
@@ -598,9 +881,75 @@ function render(){
         <div class="sub-tabs">
           <button class="sub-tab ${S.tSubTab==='clasificacion'?'active':''}" onclick="set({tSubTab:'clasificacion'})">Clasificación</button>
           <button class="sub-tab ${S.tSubTab==='partidos'?'active':''}" onclick="set({tSubTab:'partidos'})">Partidos</button>
+          <button class="sub-tab ${S.tSubTab==='bracket'?'active':''}" onclick="set({tSubTab:'bracket'})">Bracket</button>
         </div>
-        ${S.tSubTab==='clasificacion'?`<div class="card">${rrTable}</div>`:``}
-        ${S.tSubTab==='partidos'?`<div class="card">${matchList}</div>`:``}`;
+        ${S.tSubTab==='clasificacion'?`<div class="card">${rrTable}</div>`:''}
+        ${S.tSubTab==='partidos'?`<div class="card">${matchList}</div>`:''}
+        ${S.tSubTab==='bracket'?`<div class="card">${bracketHtml}</div>`:''}`;
+    }
+
+    // ── ADMIN ──
+    if(S.tab==='admin'){
+      if(!isAdmin){
+        content=`<div class="empty"><div class="ico">🔒</div><p>Solo accesible para administradores</p></div>`;
+      } else {
+        const playersHtml=S.players.map(p=>`<tr>
+          <td>${p.name||'—'}</td>
+          <td style="color:var(--text2)">${p.email}</td>
+          <td style="text-align:center">${p.is_admin?`<span class="pill pill-warn">Admin</span>`:`<span class="pill" style="background:var(--surface2)">Usuario</span>`}</td>
+          <td style="text-align:right">
+            <button class="btn btn-ghost btn-sm" onclick="toggleAdmin('${p.id}',${!!p.is_admin})">
+              ${p.is_admin?'Quitar admin':'Hacer admin'}
+            </button>
+          </td>
+        </tr>`).join('');
+
+        const matchesHtml=S.matches.slice(0,20).map(m=>`<tr>
+          <td style="font-size:12px;color:var(--text2)">${fdate(m.created_at)}</td>
+          <td>${pname(m.player1_id)} / ${pname(m.player2_id)}</td>
+          <td style="text-align:center">${m.winner_team===1?'✓':''}</td>
+          <td>${pname(m.player3_id)} / ${pname(m.player4_id)}</td>
+          <td style="text-align:center">${m.winner_team===2?'✓':''}</td>
+          <td style="text-align:right">
+            <button class="btn btn-sm btn-danger" onclick="deleteMatch('${m.id}')">✕</button>
+          </td>
+        </tr>`).join('');
+
+        const totalMatches=S.matches.length;
+        const totalPlayers=S.players.length;
+        const totalTournaments=S.tournaments.length;
+        const activeTournaments=S.tournaments.filter(t=>t.status==='active').length;
+
+        content=`
+          <p class="section-title">Panel de administración</p>
+          <div class="mgrid" style="grid-template-columns:repeat(4,1fr);margin-bottom:1rem">
+            <div class="mcard"><div class="mcard-label">Jugadores</div><div class="mcard-val">${totalPlayers}</div></div>
+            <div class="mcard"><div class="mcard-label">Partidos</div><div class="mcard-val">${totalMatches}</div></div>
+            <div class="mcard"><div class="mcard-label">Torneos</div><div class="mcard-val">${totalTournaments}</div></div>
+            <div class="mcard"><div class="mcard-label">En curso</div><div class="mcard-val" style="color:var(--green)">${activeTournaments}</div></div>
+          </div>
+          <div class="sub-tabs">
+            <button class="sub-tab ${S.adminSubTab==='players'?'active':''}" onclick="set({adminSubTab:'players'})">Jugadores</button>
+            <button class="sub-tab ${S.adminSubTab==='matches'?'active':''}" onclick="set({adminSubTab:'matches'})">Partidos</button>
+          </div>
+          ${S.adminSubTab==='players'?`
+            <div class="card">
+              <table class="admin-table">
+                <thead><tr><th>Nombre</th><th>Email</th><th style="text-align:center">Rol</th><th></th></tr></thead>
+                <tbody>${playersHtml}</tbody>
+              </table>
+            </div>`:''
+          }
+          ${S.adminSubTab==='matches'?`
+            <div class="card">
+              <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Mostrando los últimos 20 partidos</p>
+              <table class="admin-table">
+                <thead><tr><th>Fecha</th><th>Pareja 1</th><th style="text-align:center">G</th><th>Pareja 2</th><th style="text-align:center">G</th><th></th></tr></thead>
+                <tbody>${matchesHtml}</tbody>
+              </table>
+            </div>`:''
+          }`;
+      }
     }
 
     // ── PERFIL ──
@@ -628,17 +977,24 @@ function render(){
             <div class="fg"><label>Cambiar nombre</label><input type="text" id="f-editname" value="${uname}" placeholder="Tu nombre completo"/></div>
             <button class="btn btn-green" onclick="updateName()">Guardar nombre</button>
           </div>
-        </div>`;
+        </div>
+        <button class="btn btn-ghost" onclick="set({tab:'stats',statsPlayerId:'${S.user?.id}'})">
+          <i class="ti ti-chart-bar"></i> Ver mis estadísticas detalladas
+        </button>`;
     }
+
+    const adminTab=isAdmin?`<button class="nav-tab ${S.tab==='admin'?'active':''}" onclick="set({tab:'admin',err:null,ok:null})"><i class="ti ti-shield" style="font-size:13px;vertical-align:-1px"></i> Admin</button>`:'';
 
     root.innerHTML=`
       <nav class="nav">
         <div class="nav-logo"><div class="nav-ball">🎾</div><span>Pádel Club</span></div>
         <div class="nav-tabs">
           <button class="nav-tab ${S.tab==='ranking'?'active':''}" onclick="set({tab:'ranking',err:null,ok:null})"><i class="ti ti-trophy" style="font-size:13px;vertical-align:-1px"></i> Ranking</button>
+          <button class="nav-tab ${S.tab==='h2h'?'active':''}" onclick="set({tab:'h2h',err:null,ok:null})"><i class="ti ti-users" style="font-size:13px;vertical-align:-1px"></i> H2H</button>
           <button class="nav-tab ${S.tab==='matches'?'active':''}" onclick="set({tab:'matches',err:null,ok:null})"><i class="ti ti-list" style="font-size:13px;vertical-align:-1px"></i> Partidos</button>
           <button class="nav-tab ${S.tab==='new'?'active':''}" onclick="set({tab:'new',err:null,ok:null})"><i class="ti ti-plus" style="font-size:13px;vertical-align:-1px"></i> Añadir</button>
           <button class="nav-tab ${S.tab==='torneos'||S.tab==='torneo-detalle'?'active':''}" onclick="set({tab:'torneos',err:null,ok:null})"><i class="ti ti-tournament" style="font-size:13px;vertical-align:-1px"></i> Torneos</button>
+          ${adminTab}
           <button class="nav-tab ${S.tab==='profile'?'active':''}" onclick="set({tab:'profile',err:null,ok:null})"><i class="ti ti-user" style="font-size:13px;vertical-align:-1px"></i> Perfil</button>
         </div>
         <div class="nav-right">
